@@ -1,0 +1,6 @@
+initial_file: D:\Projects\oib\text.txt
+encrypted_file: D:\Projects\oib\e_text.txt
+decrypted_file: D:\Projects\oib\d_text.txt
+symmetric_key: D:\Projects\oib\symmetric_key.txt
+public_key: D:\Projects\oib\public_key.pem
+secret_key: D:\Projects\oib\secret_key.pem
