@@ -19,7 +19,7 @@ def serialize_symmetric_key(_key, path='symmetric_key.txt'):
         key_file.write(_key)
 
 
-def deserialize_symmetric_key(path='symmetric_key.txt'):
+def deserialize_symmetric_key(path):
     with open(path, 'rb') as key_file:
         _key = key_file.read()
         return _key
@@ -107,13 +107,14 @@ def keys_generator(path_symm: str = 'symmetric_key.txt',
 
 
 def encrypt_data(path_initial: str = 'text.txt',
+                 path_encrypted_text: str = 'encrypted.txt',
                  path_private: str = 'private.pem',
                  path_symm: str = 'symmetric_key.txt',
-                 path_encrypted_text: str = 'encrypted.txt') -> None:
+                 ) -> None:
 
-    # чтение из файлов ассиметричных ключей
+    # чтение из файлов
     with open(path_symm, 'rb') as sym_file:
-        symmetric_key = sym_file.read()
+        symmetric_key1 = sym_file.read()
     with open(path_initial, 'rb') as text_file:
         initial_text = text_file.read()
 
@@ -121,10 +122,10 @@ def encrypt_data(path_initial: str = 'text.txt',
     private_key = deserialize_private_key(path_private)
 
     # дешифровка симметричного ключа
-    symmetric_key = decrypt_symmetric_key(symmetric_key, private_key)
+    symmetric_key = decrypt_symmetric_key(symmetric_key1, private_key)
 
     # шифровка текста
-    encrypted_text = encrypt_text_with_symmetric_algorithm(symmetric_key, initial_text.decode('windows-1251'))
+    encrypted_text = encrypt_text_with_symmetric_algorithm(symmetric_key, initial_text.decode('utf-8'))
 
     # запись зашифрованного текста в файл
     with open(path_encrypted_text, 'wb') as enc_file:
@@ -220,3 +221,9 @@ if __name__ == '__main__':
             print('Incorrect command at pos4')
 
     print('Done')
+
+
+# python main.py -s D:\Projects\oib\settings.txt
+# python main.py -gen do
+# python main.py -enc do
+# python main.py -dec do
